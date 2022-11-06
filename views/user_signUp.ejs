@@ -5,18 +5,34 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SIGN UP</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/css/signUP.css">
 </head>
 <body>
-    <%-include('./header.ejs'); %>
-    
-    <form action="/users/create" method="post">
-        <input type="text" name="name" placeholder="User Name" required>
-        <input type="email" name="email" placeholder="Eamil" required> 
-        <input type="password" name="password" placeholder="Password" required>
-        <input type="password" name="confirm_password" placeholder="Confirm Password" required>
-        <button type="submit" >Sign UP</button>
-    </form>
-    
-    <%-include('./footer.ejs'); %>
+    <div class="container">
+        <div class="logo">
+           <div class="welcome">Welcome to...</div>
+           <span >
+            <i class="fa fa-music"></i>
+            Musify </span> 
+           <a href="/">Home</a>
+        </div>
+        <div class="form">
+           <span>Sign Up</span> 
+            <form action="/users/create" method="post">
+                <input type="text" name="name" placeholder="User Name" required>
+                <input type="email" name="email" placeholder="Email" required> 
+                <input type="password" name="password" placeholder="Password" required>
+                <input type="password" name="confirm_password" placeholder="Confirm Password" required>
+                <button type="submit" >Sign Up</button>
+                <p>Already have an Account.. Go to Sign In Page ?  <a href="/users/sign-in">Click here</a></p>
+            </form>
+            
+        </div>
+    </div>
 </body>
 </html>
+
+
+
+
