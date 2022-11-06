@@ -7,6 +7,8 @@
     <title>SIGN UP</title>
 </head>
 <body>
+    <%-include('./header.ejs'); %>
+    
     <form action="/users/create" method="post">
         <input type="text" name="name" placeholder="User Name" required>
         <input type="email" name="email" placeholder="Eamil" required> 
@@ -14,6 +16,7 @@
         <input type="password" name="confirm_password" placeholder="Confirm Password" required>
         <button type="submit" >Sign UP</button>
     </form>
-    <a href="/" >HOME</a>
+    
+    <%-include('./footer.ejs'); %>
 </body>
 </html>

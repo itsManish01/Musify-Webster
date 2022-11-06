@@ -7,8 +7,12 @@
     <title>Your Profile</title>
 </head>
 <body>
+    <%-include('./header.ejs'); %>
+    
     <h2>Profile</h2>
     <h4>Name: <%=user.name%></h4>
     <h4>Email: <%=user.email%></h4>
+    
+    <%-include('./footer.ejs'); %>
 </body>
 </html>
