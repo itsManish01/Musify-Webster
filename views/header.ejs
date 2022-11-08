@@ -1,11 +1,18 @@
 <header>
-    <nav  class="sub"><span>MUSIFY</span> |
+    <nav  class="sub">
+        <div class="logo">
+            <span><i class="fa fa-music"></i> MUSIFY</span>
+        </div>
+        <!-- <form action=""><input type="text" required placeholder="Search"> </form> -->
+        <div class="options">
+        <a href="/" > <i class="fa fa-home"> Home </i> </a> 
         <% if(locals.user) {%>
-            <span><a href="/users/profile"><%=user.name%></a></span>
-            <span><a href="/users/sign-out">Sign Out</a></span>
+            | <span><a href="/users/profile"><i class="fa fa-user"></i> <%=user.name%></a></span>
+            | <span><a href="/users/sign-out"><i class="fa fa-sign-out"></i> Sign Out</a></span>
         <%}else{%>
-            <span><a href="/users/sign-in">Sign In</a></span>
-            <span><a href="/users/sign-up">Sign Up</a></span>
+            | <span><a href="/users/sign-in"><i class="fa fa-sign-in" aria-hidden="true"></i> Sign In</a></span>
+            | <span><a href="/users/sign-up"><i class="fa fa-user-circle-o" aria-hidden="true"></i> Sign Up</a></span>
         <%}%>
+        </div>
     </nav>
 </header>

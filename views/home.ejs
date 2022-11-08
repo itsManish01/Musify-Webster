@@ -1,16 +1,68 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HOME</title>
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MUSIFY | Home</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <link rel="stylesheet" href="/css/header.css" />
+    <link rel="stylesheet" href="/css/footer.css" />
+    <link rel="stylesheet" href="/css/home.css" />
+  </head>
+  <body>
     <%-include('./header.ejs'); %>
 
-    <h2>MUSIFY HOME PAGE</h2>
-    
+    <!-- <h2>MUSIFY HOME PAGE</h2> -->
+    <div class="home-container">
+      <div class="player">
+        <% if(locals.user){ %>
+        <%= currentSong.name %>
+        <%} else {%>
+          PLAYER
+        <% } %>
+      </div>
+      <div class="all-songs">
+        <form action="">
+          <input type="text" placeholder="Search" name="search">
+        </form>
+        <% var count=1 %>
+        <% for (song of songs){%>
+          <%if(song.name == 'Welcome'){ continue; }%>
+        <div class="song">
+          <audio src="/songs/<%=song.src%>" id="myAudio"></audio>
+          <div class="sn-no"><%=count%></div>
+          <% count++; %>
+          <img src="/images/<%=song.art%>" >
+          <dv class="song-info"><span><%=song.name%></span><br><%=song.artist%></dv>
+          
+          <div class="song-btn">
+            <form action="/users/like">
+              <input type="hidden" name="song_id" value="<%=song._id%>">
+              <button type="submit"><i class="fa fa-heart-o"></i></button>
+            </form>
+            <form action="/users/play" method="post">
+              <%if(locals.user){%>
+              <input type="hidden" name="user_id" value="<%=user._id%>">
+              <%} %>
+              <input type="hidden" name="song_id" value="<%=song._id%>">
+              <button type="submit"><i class="fa fa-play" aria-hidden="true"></i></button>
+            </form>
+            <form action="/users/add">
+              <input type="hidden" name="song_id" value="<%=song._id%>">
+              <button type="submit"><i class="fa fa-plus-circle" aria-hidden="true"></i></button>
+            </form>
+          </div>
+        </div>
+        <% } %>
+      </div>
+      <div class="user-lib">Your Library</div>
+    </div>
+
     <%-include('./footer.ejs'); %>
-</body>
+    
+  </body>
 </html>

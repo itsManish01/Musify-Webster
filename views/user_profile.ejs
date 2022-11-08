@@ -5,6 +5,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Your Profile</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/css/header.css">
+    <link rel="stylesheet" href="/css/footer.css">
+    <!-- <link rel="stylesheet" href="/profile.css"> -->
 </head>
 <body>
     <%-include('./header.ejs'); %>
@@ -12,7 +16,17 @@
     <h2>Profile</h2>
     <h4>Name: <%=user.name%></h4>
     <h4>Email: <%=user.email%></h4>
-    
+    <div class="history-container">
+        <% var count=1 %>
+        <% for (song of history){%>
+        <div class="song">
+          <div class="sn-no"><%=count%></div>
+          <% count++; %>
+          <img src="/images/<%=song.art%>" >
+          <dv class="song-info"><span><%=song.name%></span><br><%=song.artist%>
+        </dv>
+          <% }%>
+    </div>
     <%-include('./footer.ejs'); %>
 </body>
 </html>

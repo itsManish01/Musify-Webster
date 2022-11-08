@@ -1,0 +1,41 @@
+body {
+  margin: 0;
+}
+
+body header nav {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  background-color: #FFA101;
+  font-size: xx-large;
+  box-shadow: 5px 5px 15px 0px grey;
+}
+
+body header nav form {
+  padding: 2%;
+}
+
+body header nav form input {
+  width: 100%;
+  padding: 3%;
+  font-size: large;
+  border: 0;
+  border-radius: 10px;
+}
+
+body header nav .logo {
+  background-color: #b3dee5;
+  text-align: center;
+  width: 20%;
+  padding: 2%;
+}
+
+body header nav .options {
+  padding: 2%;
+}
+
+body header nav .options a {
+  text-decoration: none;
+  color: black;
+  font-size: large;
+}

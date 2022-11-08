@@ -1,56 +1,94 @@
-const User = require('../models/user');
+const User = require("../models/user");
+const Song = require("../models/songs");
 
-module.exports.profile = function(req,res){
-    // res.end("users/profile");
-    res.render('user_profile');
-}
-
-module.exports.signIN = function(req,res){
-    // res.end("users/SignIn");
-    if (req.isAuthenticated()){ //making sign in page not available if already signed IN
-        return res.redirect('/users/profile');
+module.exports.profile = function (req, res) {
+  // res.end("users/profile");
+  User.findById(req.user._id)
+    .populate('history')
+    .sort([['updatedAt' , 1]])
+    .exec(function (err, user) {
+      if (err) {
+        console.log(err);
+        return;
       }
-      
-      return res.render("user_signIN",{
-        // title : "Codecial | Sign In"
+      // console.log(user.history);
+      return res.render("user_profile", {
+        history: user.history,
       });
-}
-module.exports.signUP = function(req,res){
-    // res.end("users/SignUP");
-    if (req.isAuthenticated()){    //making sign Up page not available if already signed IN
-        return res.redirect('/users/profile');
-      }
-      return res.render("user_signUP",{
-        // title : "Codecial | Sign Up"
-      });
-}
-module.exports.create = function(req,res){
-    if(req.body.password != req.body.confirm_password){
-      return  res.redirect('back');
-    }
-    User.findOne({email: req.body.email},function(err , user){
-      if( err ){
-        console.log('error in finding the user in Signing up');
-      }
-      if(!user){
-        User.create( req.body , 
-          function(err , user){
-            if(err){ console.log('error in creating user while signing up');}
-               return res.redirect('/users/sign-in');
-        });
-      }else{
-        return res.redirect('back');
-      }
-    })
-}
-
-module.exports.createSession = function(req,res){
-    return res.redirect('/');
-}
-
-module.exports.destroySession = function(req, res, next) {
-    req.logout(function(err) {
-      if (err) { return next(err); }
-      res.redirect('/');
     });
-  };
+};
+
+module.exports.signIN = function (req, res) {
+  // res.end("users/SignIn");
+  if (req.isAuthenticated()) {
+    //making sign in page not available if already signed IN
+    return res.redirect("/users/profile");
+  }
+
+  return res.render("user_signIN", {
+    // title : "Codecial | Sign In"
+  });
+};
+module.exports.signUP = function (req, res) {
+  // res.end("users/SignUP");
+  if (req.isAuthenticated()) {
+    //making sign Up page not available if already signed IN
+    return res.redirect("/users/profile");
+  }
+  return res.render("user_signUP", {
+    // title : "Codecial | Sign Up"
+  });
+};
+module.exports.create = function (req, res) {
+  if (req.body.password != req.body.confirm_password) {
+    return res.redirect("back");
+  }
+  User.findOne({ email: req.body.email }, function (err, user) {
+    if (err) {
+      console.log("error in finding the user in Signing up");
+    }
+    if (!user) {
+      User.create({
+        name: req.body.name ,
+        email : req.body.email,
+        password : req.body.password,
+        currentSong : "636a3c64cc108c39c85f767a",
+      }, function (err, user) {
+        if (err) {
+          console.log(err);
+        }
+        return res.redirect("/users/sign-in");
+      });
+    } else {
+      return res.redirect("back");
+    }
+  });
+};
+
+module.exports.playSong = function (req, res) {
+  // console.log(req.body);
+  User.findById(req.body.user_id, function (err, user) {
+    if (err) {
+      console.log(err);
+      return;
+    } else {
+      user.currentSong = req.body.song_id;
+      user.history.push(req.body.song_id);
+      user.save();
+      return res.redirect("back");
+    }
+  });
+};
+
+module.exports.createSession = function (req, res) {
+  return res.redirect("/home");
+};
+
+module.exports.destroySession = function (req, res, next) {
+  req.logout(function (err) {
+    if (err) {
+      return next(err);
+    }
+    res.redirect("/");
+  });
+};

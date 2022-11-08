@@ -13,7 +13,23 @@ const userSchema = new mongoose.Schema({
     name :{
         type : String,
         require: true,
-    }
+    },
+    currentSong : {
+        type : mongoose.Schema.Types.ObjectId,
+        ref : 'Song',
+    },
+    history : [
+        {
+            type : mongoose.Schema.Types.ObjectId,
+            ref : 'Song',
+        }
+    ],
+    playlist : [
+        {
+            type : mongoose.Schema.Types.ObjectId,
+            ref : 'Playlist',
+        }
+    ]
 }, {
     timestamps : true,
 });
