@@ -1,5 +1,10 @@
 const User = require("../models/user");
 const Song = require("../models/songs");
+const { collection } = require("../models/user");
+const passport = require('passport')
+const passportLocal = require('passport-local');
+const { isObjectIdOrHexString } = require("mongoose");
+const { castObject } = require("../models/songs");
 
 module.exports.profile = function (req, res) {
   // res.end("users/profile");
@@ -18,6 +23,20 @@ module.exports.profile = function (req, res) {
     });
 };
 
+module.exports.like= function(req,res){
+  console.log(req.params.id);
+  console.log(req.user._id)
+  User.findById(req.user._id, function(err,user){
+    if(err){
+      console.log(err);return;
+    }else{
+        user.likes.push(req.params.id);
+        user.save();
+        return res.redirect('back');
+    }
+  })
+  
+}
 module.exports.signIN = function (req, res) {
   // res.end("users/SignIn");
   if (req.isAuthenticated()) {
@@ -85,10 +104,21 @@ module.exports.createSession = function (req, res) {
 };
 
 module.exports.destroySession = function (req, res, next) {
+  console.log(req.params.id);
+  User.findById(req.params.id , function(err,user){
+    if(err){
+      console.log(err);
+    }else{
+      user.currentSong = "636a3c64cc108c39c85f767a";
+      user.save();
+      console.log(user);
+    }
+  })
   req.logout(function (err) {
     if (err) {
       return next(err);
     }
+    
     res.redirect("/");
   });
 };

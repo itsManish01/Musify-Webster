@@ -1,4 +1,5 @@
 body {
+  font-family: Arial, Helvetica, sans-serif;
   margin: 0;
   background-color: black;
   .home-container {
@@ -10,7 +11,41 @@ body {
     .player {
       width: 20%;
       padding: 2%;
-      background-color: aqua;
+      background-color: #FFA101;
+      margin: 10px;
+      margin-top: 0;
+      margin-bottom: 0;
+      border-radius: 20px;
+      border:3px solid #ffffff;
+      
+      .current-song{
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
+        align-items: center;
+        .player-function{
+          button{
+            color: grey;
+            background-color: #FFA101;
+            cursor: pointer;
+            font-size: medium;
+            border: 0;
+          }
+        }
+        .s-name{
+          font-size: x-large;
+        }
+        .a-name{
+          font-size: large;
+        }
+        
+        img{
+          height: 85%;
+          width: 85%;
+          border-radius: 25px;
+          box-shadow: 5px 5px 10px 0px rgb(0, 0, 0);
+        }
+      }
     }
     .all-songs {
       overflow-y: scroll; 
@@ -43,6 +78,10 @@ body {
         background-color: black;
         color: white;
         box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 25px;
+        :hover{
+          transform: scale(1.1);
+          transition: 0.3s;
+        }
         .sn-no {
           grid-column-start: 1;
           grid-column-end: 2;
@@ -65,6 +104,12 @@ body {
           }
         }
         .song-btn {
+          a{
+            color: #b90707;
+            text-decoration: none;
+            cursor: pointer;
+            
+          }
             font-size: x-large;
             display: flex;
             flex-direction: row;

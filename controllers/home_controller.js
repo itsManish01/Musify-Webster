@@ -1,7 +1,9 @@
 const Song = require('../models/songs');
 const User = require('../models/user');
 
-module.exports.home= function(req,res){    
+// var query = ;
+module.exports.home= function(req,res){   
+    // console.log(req.body); 
     Song.find({}, function(err,song){
         if(req.isAuthenticated()){
             User.findById(req.user._id)
@@ -10,9 +12,8 @@ module.exports.home= function(req,res){
                 if(err){
                     console.log(err); return;
                 }
-                // console.log(user.currentSong);
-                
                     return res.render('home', {
+                     user : user ,
                      currentSong : user.currentSong, 
                      songs : song,
                 })

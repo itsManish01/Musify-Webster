@@ -8,7 +8,7 @@
         <a href="/" > <i class="fa fa-home"> Home </i> </a> 
         <% if(locals.user) {%>
             | <span><a href="/users/profile"><i class="fa fa-user"></i> <%=user.name%></a></span>
-            | <span><a href="/users/sign-out"><i class="fa fa-sign-out"></i> Sign Out</a></span>
+            | <span><a href="/users/sign-out/<%=locals.user._id%>"><i class="fa fa-sign-out"></i> Sign Out</a></span>
         <%}else{%>
             | <span><a href="/users/sign-in"><i class="fa fa-sign-in" aria-hidden="true"></i> Sign In</a></span>
             | <span><a href="/users/sign-up"><i class="fa fa-user-circle-o" aria-hidden="true"></i> Sign Up</a></span>

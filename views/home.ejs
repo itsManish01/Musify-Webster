@@ -20,40 +20,57 @@
     <div class="home-container">
       <div class="player">
         <% if(locals.user){ %>
-        <%= currentSong.name %>
+        <div class="current-song">
+          <img src="/images/<%=currentSong.art%>" alt="" />
+          <p class="s-name"><%= currentSong.name %></p>
+          <p class="a-name"><%= currentSong.artist %></p>
+          <audio
+            src="/songs/<%=currentSong.src%>"
+            id="player-audio"
+            controls
+            autoplay
+          ></audio>
+          <p class="player-function">
+            <button onclick="loop()" id="btn" title="Loop">
+              <i class="fa fa-repeat" aria-hidden="true"></i>
+            </button>
+          </p>
+        </div>
         <%} else {%>
-          PLAYER
+        <span>
+          <img src="/images/startup_sound.png" style="width: 275px ; height:275px ; margin-top: 25px;">
+          <p style="font-size: large ;">Sign In to Enjoy!</p>
+        </span>
         <% } %>
       </div>
       <div class="all-songs">
-        <form action="">
-          <input type="text" placeholder="Search" name="search">
+        <form action="/" method="get">
+          <input type="text" name="key" placeholder="Search" required />
         </form>
-        <% var count=1 %>
-        <% for (song of songs){%>
-          <%if(song.name == 'Welcome'){ continue; }%>
+        <% var count=1 %> <% for (song of songs){%> <%if(song.name ==
+        'Welcome'){ continue; }%>
         <div class="song">
           <audio src="/songs/<%=song.src%>" id="myAudio"></audio>
           <div class="sn-no"><%=count%></div>
           <% count++; %>
-          <img src="/images/<%=song.art%>" >
-          <dv class="song-info"><span><%=song.name%></span><br><%=song.artist%></dv>
-          
+          <img src="/images/<%=song.art%>" />
+          <dvi class="song-info"><span><%=song.name%></span><br><%=song.artist%></dvi>
           <div class="song-btn">
-            <form action="/users/like">
-              <input type="hidden" name="song_id" value="<%=song._id%>">
-              <button type="submit"><i class="fa fa-heart-o"></i></button>
-            </form>
+            <a id="like" href="/users/like/<%=song._id%>" title="Add to Likes"><i class="fa fa-heart-o"></i> </a>
             <form action="/users/play" method="post">
               <%if(locals.user){%>
-              <input type="hidden" name="user_id" value="<%=user._id%>">
+              <input type="hidden" name="user_id" value="<%=user._id%>" />
               <%} %>
-              <input type="hidden" name="song_id" value="<%=song._id%>">
-              <button type="submit"><i class="fa fa-play" aria-hidden="true"></i></button>
+              <input type="hidden" name="song_id" value="<%=song._id%>" />
+              <button type="submit" title="Play">
+                <i class="fa fa-play" aria-hidden="true"></i>
+              </button>
             </form>
             <form action="/users/add">
-              <input type="hidden" name="song_id" value="<%=song._id%>">
-              <button type="submit"><i class="fa fa-plus-circle" aria-hidden="true"></i></button>
+              <input type="hidden" name="song_id" value="<%=song._id%>" />
+              <button type="submit" title="Add to Playlist">
+                <i class="fa fa-plus-circle" aria-hidden="true"></i>
+              </button>
             </form>
           </div>
         </div>
@@ -63,6 +80,19 @@
     </div>
 
     <%-include('./footer.ejs'); %>
-    
+    <script>
+      let btn = document.getElementById("btn");
+      let x = document.getElementById("player-audio");
+      function loop() {
+        if (x.loop == false) {
+          x.loop = true;
+          btn.style.color = "black";
+        } else {
+          x.loop = false;
+          btn.style.color = "grey";
+        }
+      }
+      
+    </script>
   </body>
 </html>

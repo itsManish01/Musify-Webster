@@ -29,6 +29,12 @@ const userSchema = new mongoose.Schema({
             type : mongoose.Schema.Types.ObjectId,
             ref : 'Playlist',
         }
+    ],
+    likes : [
+        {
+            type : mongoose.Schema.Types.ObjectId,
+            ref : 'Song',
+        }
     ]
 }, {
     timestamps : true,

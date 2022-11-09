@@ -1,4 +1,5 @@
 body {
+  font-family: Arial, Helvetica, sans-serif;
   margin: 0;
   background-color: black;
 }
@@ -14,7 +15,42 @@ body .home-container {
 body .home-container .player {
   width: 20%;
   padding: 2%;
-  background-color: aqua;
+  background-color: #FFA101;
+  margin: 10px;
+  margin-top: 0;
+  margin-bottom: 0;
+  border-radius: 20px;
+  border: 3px solid #ffffff;
+}
+
+body .home-container .player .current-song {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+body .home-container .player .current-song .player-function button {
+  color: grey;
+  background-color: #FFA101;
+  cursor: pointer;
+  font-size: medium;
+  border: 0;
+}
+
+body .home-container .player .current-song .s-name {
+  font-size: x-large;
+}
+
+body .home-container .player .current-song .a-name {
+  font-size: large;
+}
+
+body .home-container .player .current-song img {
+  height: 85%;
+  width: 85%;
+  border-radius: 25px;
+  box-shadow: 5px 5px 10px 0px black;
 }
 
 body .home-container .all-songs {
@@ -54,6 +90,11 @@ body .home-container .all-songs .song {
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 25px;
 }
 
+body .home-container .all-songs .song :hover {
+  transform: scale(1.1);
+  transition: 0.3s;
+}
+
 body .home-container .all-songs .song .sn-no {
   grid-column-start: 1;
   grid-column-end: 2;
@@ -88,6 +129,12 @@ body .home-container .all-songs .song .song-btn {
   align-items: center;
   grid-column-start: 4;
   grid-column-end: 5;
+}
+
+body .home-container .all-songs .song .song-btn a {
+  color: #b90707;
+  text-decoration: none;
+  cursor: pointer;
 }
 
 body .home-container .all-songs .song .song-btn form button {
