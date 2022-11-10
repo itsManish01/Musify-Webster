@@ -13,6 +13,7 @@ router.get('/like/:id' ,passport.checkAuthentication, userController.like);
 router.get('/create-session' , userController.createSession);
 router.get('/sign-out/:id' , userController.destroySession);
 router.post('/play' , passport.checkAuthentication, userController.playSong);
+router.post('/playLiked' , passport.checkAuthentication, userController.playLiked);
 //use passport as a middle ware to Authenticate
 router.post('/create-session' , passport.authenticate(
     'local',

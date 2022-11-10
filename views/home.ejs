@@ -13,13 +13,13 @@
     <link rel="stylesheet" href="/css/footer.css" />
     <link rel="stylesheet" href="/css/home.css" />
   </head>
-  <body>
+  <body onLoad="setup();">
     <%-include('./header.ejs'); %>
 
     <!-- <h2>MUSIFY HOME PAGE</h2> -->
     <div class="home-container">
       <div class="player">
-        <% if(locals.user){ %>
+        <% if(locals.user){ %> <% if(locals.user.temp=="single"){%>
         <div class="current-song">
           <img src="/images/<%=currentSong.art%>" alt="" />
           <p class="s-name"><%= currentSong.name %></p>
@@ -36,7 +36,34 @@
             </button>
           </p>
         </div>
-        <%} else {%>
+        <% }else{%>
+          <% let i= 1 %>
+          <% for(song of locals.user.currentPlaylist){%>
+          <p id="songName<%=i%>" style="display: none"><%=song.name%></p>
+          <%i++;}%>
+          <% i= 1 %>
+          <% for(song of locals.user.currentPlaylist){%>
+          <p id="artistName<%=i%>" style="display: none;"><%=song.artist%></p>
+          <%i++;}%>
+          <div class="current-song">
+          <img id="songArt" src="/images/<%=locals.user.currentPlaylist[0].art%>" alt="" />
+          <p class="s-name" id="s-name"><%= locals.user.currentPlaylist[0].name %></p>
+          <p class="a-name" id="a-name"><%= locals.user.currentPlaylist[0].artist %></p> 
+        
+          <audio
+            src="/songs/<%=locals.user.currentPlaylist[0].src%>"
+            id="player-audio"
+            controls
+            autoplay
+          ></audio>
+          <p class="player-function">
+            <button onclick="loop()" id="btn" title="Loop">
+              <i class="fa fa-repeat" aria-hidden="true"></i>
+            </button>
+          </p>
+        </div>
+          <%}%>
+         <%} else {%>
         <span>
           <img
             src="/images/startup_sound.png"
@@ -111,11 +138,11 @@
           <input type="hidden" name="user_id" value="<%=locals.user._id%>" />
           <button type="submit">ADD</button>
         </form>
-        <hr>
+        <hr />
         Your Playlists
         <br />
         <div class="my-playlist">
-          <% for(playlist of playlists){%>
+          <% for(playlist of playlists){ %>
           <li>
             <%= playlist.name %>
             <button onclick="copyToClipBoard('<%=playlist._id%>')">
@@ -125,15 +152,20 @@
           <%}%>
         </div>
 
-
-        <button type="button" class="collapsible">Liked songs</button>
+        <button type="button" class="collapsible">Liked songs
+          <form action="/users/playLiked" method="post">
+          <input type="hidden" name="user_id" value="<%=locals.user._id%>" />
+          <button type="submit">PLAY</button>
+        </form>
+        </button>
+        
         <div class="content">
-        <% for( like of user.likes) {%>
+          <% for( like of user.likes) {%>
           <p><%= like.name%> | <%=like.artist%></p>
           <%}%>
         </div>
-        <hr>
-        
+        <hr />
+
         <%} else {%>
         <span>Sign IN to create your own Playlist</span>
         <%}%>

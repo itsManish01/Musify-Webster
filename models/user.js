@@ -14,10 +14,20 @@ const userSchema = new mongoose.Schema({
         type : String,
         require: true,
     },
+    temp: {
+        type: String,
+        default : "single"
+    },
     currentSong : {
         type : mongoose.Schema.Types.ObjectId,
         ref : 'Song',
     },
+    currentPlaylist : [
+        {
+            type : mongoose.Schema.Types.ObjectId,
+            ref : 'Song',
+        }
+    ],
     history : [
         {
             type : mongoose.Schema.Types.ObjectId,

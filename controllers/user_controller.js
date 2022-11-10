@@ -71,6 +71,7 @@ module.exports.create = function (req, res) {
         name: req.body.name ,
         email : req.body.email,
         password : req.body.password,
+        currentPlaylist : [],
         currentSong : "636a3c64cc108c39c85f767a",
       }, function (err, user) {
         if (err) {
@@ -92,7 +93,24 @@ module.exports.playSong = function (req, res) {
       return;
     } else {
       user.currentSong = req.body.song_id;
+      user.temp = "single";
       user.history.push(req.body.song_id);
+      user.save();
+      return res.redirect("back");
+    }
+  });
+};
+module.exports.playLiked = function (req, res) {
+  User.findById(req.body.user_id)
+  .populate('likes')
+  .exec(function (err, user) {
+    if (err) {
+      console.log(err);
+      return;
+    } else {
+      user.currentPlaylist = user.likes;
+      console.log(user.currentPlaylist);
+      user.temp = "likes"; 
       user.save();
       return res.redirect("back");
     }
@@ -121,6 +139,7 @@ module.exports.destroySession = function (req, res, next) {
       console.log(err);
     }else{
       user.currentSong = "636a3c64cc108c39c85f767a";
+      user.temp = "single";
       user.save();
       // console.log(user);
     }
