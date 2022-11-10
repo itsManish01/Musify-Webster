@@ -24,12 +24,6 @@ const userSchema = new mongoose.Schema({
             ref : 'Song',
         }
     ],
-    playlist : [
-        {
-            type : mongoose.Schema.Types.ObjectId,
-            ref : 'Playlist',
-        }
-    ],
     likes : [
         {
             type : mongoose.Schema.Types.ObjectId,

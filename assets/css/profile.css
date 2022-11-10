@@ -41,6 +41,8 @@ body .container .user-lib .history .his .song {
   padding: 5px;
   border: 2px solid;
   border-radius: 15px;
+  color: white;
+  background-image: linear-gradient(#413d3d, #00000c);
 }
 
 body .container .user-lib .history .his .song :hover {
@@ -75,8 +77,8 @@ body .container .user-lib .history .his .song .song-info span {
 body .container .user-lib .history .his .song a {
   align-self: center;
   font-size: xx-large;
-  color: black;
   grid-column-start: 4;
+  color: #c41212;
   grid-column-end: 5;
 }
 

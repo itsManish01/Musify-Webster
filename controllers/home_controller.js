@@ -1,5 +1,6 @@
 const Song = require('../models/songs');
 const User = require('../models/user');
+const Playlist = require('../models/playlist');
 
 // var query = ;
 module.exports.home= function(req,res){   
@@ -9,15 +10,21 @@ module.exports.home= function(req,res){
             User.findById(req.user._id)
             .populate('currentSong')
             .exec(function(err,user){
-                if(err){
-                    console.log(err); return;
+                Playlist.find({
+                    users : { "$in" : [req.user._id]} 
+                },function(err,playlist){
+                    if(err){
+                        console.log(err);
+                    }else{
+                        return res.render('home', {
+                            user : user ,
+                            currentSong : user.currentSong, 
+                            songs : song,
+                            playlists : playlist ,
+                        })
+                    }
                 }
-                    return res.render('home', {
-                     user : user ,
-                     currentSong : user.currentSong, 
-                     songs : song,
-                })
-                
+                )
             })
         }else{
         if(err){

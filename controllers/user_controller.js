@@ -5,7 +5,7 @@ const passport = require('passport')
 const passportLocal = require('passport-local');
 const { isObjectIdOrHexString } = require("mongoose");
 const { castObject } = require("../models/songs");
-
+const Playlist = require('../models/playlist');
 module.exports.profile = function (req, res) {
   // res.end("users/profile");
   User.findById(req.user._id)
@@ -98,27 +98,53 @@ module.exports.playSong = function (req, res) {
     }
   });
 };
-
+module.exports.addPlaylist  = function(req,res){
+  // console.log(req.body);
+  Playlist.findById(req.body.playlistID ,function(err,playlist){
+    if(err){
+      console.log(err);return ;
+    }else{
+      playlist.users.push(req.body.user_id);
+      playlist.save();
+      return res.redirect('back');
+    }
+  })
+}
 module.exports.createSession = function (req, res) {
   return res.redirect("/home");
 };
 
 module.exports.destroySession = function (req, res, next) {
-  console.log(req.params.id);
+  // console.log(req.params.id);
   User.findById(req.params.id , function(err,user){
     if(err){
       console.log(err);
     }else{
       user.currentSong = "636a3c64cc108c39c85f767a";
       user.save();
-      console.log(user);
+      // console.log(user);
     }
   })
   req.logout(function (err) {
     if (err) {
       return next(err);
     }
-    
     res.redirect("/");
   });
+};
+
+module.exports.createPlaylist = function(req,res){
+  // console.log(req.body);
+  Playlist.create({
+    name: req.body.name,
+  },function(err,playlist){
+    if(err){
+      console.log(err);
+      return ;
+    }else{  
+      playlist.users.push(req.body.user_id);
+      playlist.save();
+      return res.redirect('/');
+    }
+  })
 };

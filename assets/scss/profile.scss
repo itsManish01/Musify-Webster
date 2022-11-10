@@ -29,6 +29,8 @@ body{
                         padding: 5px;
                         border: 2px solid ;
                         border-radius: 15px;
+                        color: white;
+                        background-image: linear-gradient(rgb(65, 61, 61) , rgb(0, 0, 12));
                         :hover{ 
                             transform: scale(1.1);
                             transition: 0.3s;
@@ -56,8 +58,8 @@ body{
                         }
                         a{  align-self: center;
                             font-size: xx-large;
-                            color: black;
                             grid-column-start: 4;
+                            color: rgb(196, 18, 18);
                             grid-column-end: 5;
                         }
                     }

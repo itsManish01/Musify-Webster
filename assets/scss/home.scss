@@ -1,4 +1,5 @@
 body {
+  
   font-family: Arial, Helvetica, sans-serif;
   margin: 0;
   background-color: black;
@@ -7,7 +8,7 @@ body {
     display: flex;
     flex-direction: row;
     gap: 15px;
-    height: 500px;
+    height: 520px;
     .player {
       width: 20%;
       padding: 2%;
@@ -48,6 +49,10 @@ body {
       }
     }
     .all-songs {
+      span{
+        align-self: center;
+        
+      }
       overflow-y: scroll; 
       width: 40%;
       display: flex;
@@ -131,6 +136,7 @@ body {
     }
     .user-lib {
       background-color: brown;
+      
     }
   }
 }

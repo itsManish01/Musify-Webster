@@ -38,12 +38,13 @@
         </div>
         <%} else {%>
         <span>
-          <img src="/images/startup_sound.png" style="width: 275px ; height:275px ; margin-top: 25px;">
+          <img src="/images/startup_sound.png" style="width: 275px ; height:275px ; margin-top: 25px; border-radius: 20px;">
           <p style="font-size: large ;">Sign In to Enjoy!</p>
         </span>
         <% } %>
       </div>
       <div class="all-songs">
+        <span style="font-weight:600;">ALL SONGS</span>
         <form action="/" method="get">
           <input type="text" name="key" placeholder="Search" required />
         </form>
@@ -76,7 +77,34 @@
         </div>
         <% } %>
       </div>
-      <div class="user-lib">Your Library</div>
+      <div class="user-lib">
+        
+        <% if(locals.user) {%>
+          <form action="/users/create-playlist" method="post">
+            <input type="text" name="name" placeholder="Create a new playlist" required>
+            <input type="hidden" name="user_id" value="<%=locals.user._id%>">
+            <button type="submit">Create</button>
+          </form>
+          <form action="/users/add-playlist" method="post">
+            <input type="text" name="playlistID" placeholder="Add a Playlist" required>
+            <input type="hidden" name="user_id" value="<%=locals.user._id%>">
+            <button type="submit">ADD</button>
+          </form>
+          <hr>
+          Your Playlists
+          <br>
+          <div class="my-playlist">
+          <% for(playlist of playlists){%>
+                <li>
+                  <%= playlist.name %>
+                  <button onclick="copyToClipBoard('<%=playlist._id%>')" ><i class="fa fa-share-alt" aria-hidden="true"></i></button>
+                </li>
+          <%}%></div>
+        <%} else {%>
+          <span>Sign IN to create your own Playlist</span>
+        <%}%>
+
+      </div>
     </div>
 
     <%-include('./footer.ejs'); %>
@@ -92,7 +120,11 @@
           btn.style.color = "grey";
         }
       }
-      
+      function copyToClipBoard(pid){
+        console.log(pid);
+        navigator.clipboard.writeText(pid);
+        alert("Copied to ClipBoard");
+      }
     </script>
   </body>
 </html>
