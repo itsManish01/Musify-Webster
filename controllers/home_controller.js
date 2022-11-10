@@ -9,6 +9,7 @@ module.exports.home= function(req,res){
         if(req.isAuthenticated()){
             User.findById(req.user._id)
             .populate('currentSong')
+            .populate('likes')
             .exec(function(err,user){
                 Playlist.find({
                     users : { "$in" : [req.user._id]} 

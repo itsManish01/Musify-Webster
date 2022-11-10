@@ -38,13 +38,21 @@
         </div>
         <%} else {%>
         <span>
-          <img src="/images/startup_sound.png" style="width: 275px ; height:275px ; margin-top: 25px; border-radius: 20px;">
-          <p style="font-size: large ;">Sign In to Enjoy!</p>
+          <img
+            src="/images/startup_sound.png"
+            style="
+              width: 275px;
+              height: 275px;
+              margin-top: 25px;
+              border-radius: 20px;
+            "
+          />
+          <p style="font-size: large">Sign In to Enjoy!</p>
         </span>
         <% } %>
       </div>
       <div class="all-songs">
-        <span style="font-weight:600;">ALL SONGS</span>
+        <span style="font-weight: 600">ALL SONGS</span>
         <form action="/" method="get">
           <input type="text" name="key" placeholder="Search" required />
         </form>
@@ -55,9 +63,13 @@
           <div class="sn-no"><%=count%></div>
           <% count++; %>
           <img src="/images/<%=song.art%>" />
-          <dvi class="song-info"><span><%=song.name%></span><br><%=song.artist%></dvi>
+          <dvi class="song-info"
+            ><span><%=song.name%></span><br /><%=song.artist%></dvi
+          >
           <div class="song-btn">
-            <a id="like" href="/users/like/<%=song._id%>" title="Add to Likes"><i class="fa fa-heart-o"></i> </a>
+            <a id="like" href="/users/like/<%=song._id%>" title="Add to Likes"
+              ><i class="fa fa-heart-o"></i>
+            </a>
             <form action="/users/play" method="post">
               <%if(locals.user){%>
               <input type="hidden" name="user_id" value="<%=user._id%>" />
@@ -78,53 +90,58 @@
         <% } %>
       </div>
       <div class="user-lib">
-        
         <% if(locals.user) {%>
-          <form action="/users/create-playlist" method="post">
-            <input type="text" name="name" placeholder="Create a new playlist" required>
-            <input type="hidden" name="user_id" value="<%=locals.user._id%>">
-            <button type="submit">Create</button>
-          </form>
-          <form action="/users/add-playlist" method="post">
-            <input type="text" name="playlistID" placeholder="Add a Playlist" required>
-            <input type="hidden" name="user_id" value="<%=locals.user._id%>">
-            <button type="submit">ADD</button>
-          </form>
-          <hr>
-          Your Playlists
-          <br>
-          <div class="my-playlist">
+        <form action="/users/create-playlist" method="post">
+          <input
+            type="text"
+            name="name"
+            placeholder="Create a new playlist"
+            required
+          />
+          <input type="hidden" name="user_id" value="<%=locals.user._id%>" />
+          <button type="submit">Create</button>
+        </form>
+        <form action="/users/add-playlist" method="post">
+          <input
+            type="text"
+            name="playlistID"
+            placeholder="Add a Playlist"
+            required
+          />
+          <input type="hidden" name="user_id" value="<%=locals.user._id%>" />
+          <button type="submit">ADD</button>
+        </form>
+        <hr>
+        Your Playlists
+        <br />
+        <div class="my-playlist">
           <% for(playlist of playlists){%>
-                <li>
-                  <%= playlist.name %>
-                  <button onclick="copyToClipBoard('<%=playlist._id%>')" ><i class="fa fa-share-alt" aria-hidden="true"></i></button>
-                </li>
-          <%}%></div>
-        <%} else {%>
-          <span>Sign IN to create your own Playlist</span>
-        <%}%>
+          <li>
+            <%= playlist.name %>
+            <button onclick="copyToClipBoard('<%=playlist._id%>')">
+              <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </button>
+          </li>
+          <%}%>
+        </div>
 
+
+        <button type="button" class="collapsible">Liked songs</button>
+        <div class="content">
+        <% for( like of user.likes) {%>
+          <p><%= like.name%> | <%=like.artist%></p>
+          <%}%>
+        </div>
+        <hr>
+        
+        <%} else {%>
+        <span>Sign IN to create your own Playlist</span>
+        <%}%>
       </div>
     </div>
 
     <%-include('./footer.ejs'); %>
-    <script>
-      let btn = document.getElementById("btn");
-      let x = document.getElementById("player-audio");
-      function loop() {
-        if (x.loop == false) {
-          x.loop = true;
-          btn.style.color = "black";
-        } else {
-          x.loop = false;
-          btn.style.color = "grey";
-        }
-      }
-      function copyToClipBoard(pid){
-        console.log(pid);
-        navigator.clipboard.writeText(pid);
-        alert("Copied to ClipBoard");
-      }
-    </script>
+
+    <script src="/js/home.js"></script>
   </body>
 </html>
