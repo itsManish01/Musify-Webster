@@ -1,3 +1,5 @@
+
+
 let btn = document.getElementById("btn");
 let x = document.getElementById("player-audio");
 function loop() {
@@ -29,37 +31,4 @@ for (i = 0; i < coll.length; i++) {
     }
   });
 }
-
-function setup() {
-  var i = 1;
-  var songNameId = "songName" + i;
-  var artistNameId = "artistName" + i;
-  audioPlayer = document.getElementById("player-audio");
-  var nextSongSrc = document.getElementById(`${songNameId}`).nextElementSibling
-    .innerHTML;
-  var nextSongArtist = document.getElementById(`${artistNameId}`)
-    .nextElementSibling.innerHTML;
-
-  document.getElementById("player-audio").addEventListener(
-    "ended",
-    function () {
-      songNameId = "songName" + i;
-      artistNameId = "artistName" + i;
-      nextSongSrc = document.getElementById(`${songNameId}`).nextElementSibling
-        .innerHTML;
-      nextSongArtist = document.getElementById(`${artistNameId}`)
-        .nextElementSibling.innerHTML;
-      audioPlayer.src = "/songs/" + nextSongSrc + ".mp3";
-      document.getElementById("s-name").innerText = nextSongSrc;
-      document.getElementById("a-name").innerText = nextSongArtist;
-      document.getElementById("songArt").src =
-        "/images/" + nextSongSrc + ".png";
-      i++;
-      audioPlayer.load();
-      audioPlayer.play();
-    },
-    false
-  );
-}
-
 

@@ -109,7 +109,7 @@ module.exports.playLiked = function (req, res) {
       return;
     } else {
       user.currentPlaylist = user.likes;
-      console.log(user.currentPlaylist);
+      // console.log(user.currentPlaylist);
       user.temp = "likes"; 
       user.save();
       return res.redirect("back");

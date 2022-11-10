@@ -36,20 +36,27 @@
             </button>
           </p>
         </div>
-        <% }else{%>
-          <% let i= 1 %>
-          <% for(song of locals.user.currentPlaylist){%>
-          <p id="songName<%=i%>" style="display: none"><%=song.name%></p>
-          <%i++;}%>
-          <% i= 1 %>
-          <% for(song of locals.user.currentPlaylist){%>
-          <p id="artistName<%=i%>" style="display: none;"><%=song.artist%></p>
-          <%i++;}%>
-          <div class="current-song">
-          <img id="songArt" src="/images/<%=locals.user.currentPlaylist[0].art%>" alt="" />
-          <p class="s-name" id="s-name"><%= locals.user.currentPlaylist[0].name %></p>
-          <p class="a-name" id="a-name"><%= locals.user.currentPlaylist[0].artist %></p> 
-        
+        <% }else{%> <% let i= 1 %> <% let count=0 %> <% for(song of
+        locals.user.currentPlaylist){%>
+        <p id="songName<%=i%>" style="display: none"><%=song.name%></p>
+        <%i++;count++;}%>
+        <p style="display: none" id="count"><%=count%></p>
+        <% i= 1 %> <% for(song of locals.user.currentPlaylist){%>
+        <p id="artistName<%=i%>" style="display: none"><%=song.artist%></p>
+        <%i++;}%>
+        <div class="current-song">
+          <img
+            id="songArt"
+            src="/images/<%=locals.user.currentPlaylist[0].art%>"
+            alt=""
+          />
+          <p class="s-name" id="s-name">
+            <%= locals.user.currentPlaylist[0].name %>
+          </p>
+          <p class="a-name" id="a-name">
+            <%= locals.user.currentPlaylist[0].artist %>
+          </p>
+
           <audio
             src="/songs/<%=locals.user.currentPlaylist[0].src%>"
             id="player-audio"
@@ -57,13 +64,14 @@
             autoplay
           ></audio>
           <p class="player-function">
+            <button onclick="pre()"><i class="fa fa-backward"></i></button>
             <button onclick="loop()" id="btn" title="Loop">
               <i class="fa fa-repeat" aria-hidden="true"></i>
             </button>
+            <button onclick="next()"><i class="fa fa-forward"></i></button>
           </p>
         </div>
-          <%}%>
-         <%} else {%>
+        <%}%> <%} else {%>
         <span>
           <img
             src="/images/startup_sound.png"
@@ -152,13 +160,14 @@
           <%}%>
         </div>
 
-        <button type="button" class="collapsible">Liked songs
+        <button type="button" class="collapsible">
+          Liked songs
           <form action="/users/playLiked" method="post">
-          <input type="hidden" name="user_id" value="<%=locals.user._id%>" />
-          <button type="submit">PLAY</button>
-        </form>
+            <input type="hidden" name="user_id" value="<%=locals.user._id%>" />
+            <button type="submit">PLAY</button>
+          </form>
         </button>
-        
+
         <div class="content">
           <% for( like of user.likes) {%>
           <p><%= like.name%> | <%=like.artist%></p>
@@ -175,5 +184,68 @@
     <%-include('./footer.ejs'); %>
 
     <script src="/js/home.js"></script>
+    <script>
+      var count = document.getElementById("count").innerHTML;
+      let c = 1;
+      function setup() {
+        var songNameId = "songName" + c;
+        var artistNameId = "artistName" + c;
+        audioPlayer = document.getElementById("player-audio");
+        var nextSongSrc = document.getElementById(`${songNameId}`)
+          .nextElementSibling.innerHTML;
+        var nextSongArtist = document.getElementById(`${artistNameId}`)
+          .nextElementSibling.innerHTML;
+        document
+          .getElementById("player-audio")
+          .addEventListener("ended", next(), false);
+      }
+
+      function next() {
+        songNameId = "songName" + c;
+        artistNameId = "artistName" + c;
+        nextSongSrc = document.getElementById(`${songNameId}`)
+          .nextElementSibling.innerHTML;
+        nextSongArtist = document.getElementById(`${artistNameId}`)
+          .nextElementSibling.innerHTML;
+          if (c >= count) {
+          songNameId = "songName1";
+          artistNameId = "artistName1";
+          nextSongSrc = document.getElementById(`${songNameId}`).innerHTML;
+          nextSongArtist = document.getElementById(`${artistNameId}`).innerHTML;
+          c = 1;
+        }
+        audioPlayer.src = "/songs/" + nextSongSrc + ".mp3";
+        document.getElementById("s-name").innerText = nextSongSrc;
+        document.getElementById("a-name").innerText = nextSongArtist;
+        document.getElementById("songArt").src =
+          "/images/" + nextSongSrc + ".png";
+        c++;
+        audioPlayer.load();
+        audioPlayer.play();
+      }
+      function pre() {
+        songNameId = "songName" + c;
+        artistNameId = "artistName" + c;
+        nextSongSrc = document.getElementById(`${songNameId}`)
+          .previousElementSibling.innerHTML;
+        nextSongArtist = document.getElementById(`${artistNameId}`)
+          .previousElementSibling.innerHTML;
+        if (c <= 1) {
+          songNameId = "songName" +count;
+          artistNameId = "artistName" + count;
+          nextSongSrc = document.getElementById(`${songNameId}`).innerHTML;
+          nextSongArtist = document.getElementById(`${artistNameId}`).innerHTML;
+          c = count;
+        }
+        audioPlayer.src = "/songs/" + nextSongSrc + ".mp3";
+        document.getElementById("s-name").innerText = nextSongSrc;
+        document.getElementById("a-name").innerText = nextSongArtist;
+        document.getElementById("songArt").src =
+          "/images/" + nextSongSrc + ".png";
+        c--;
+        audioPlayer.load();
+        audioPlayer.play();
+      }
+    </script>
   </body>
 </html>
