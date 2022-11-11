@@ -167,3 +167,18 @@ module.exports.createPlaylist = function(req,res){
     }
   })
 };
+
+module.exports.addSongInPlaylist =function(req,res){
+  // console.log(req.body);
+  Playlist.findById(req.body.playlistID, function(err,playlist){
+    if(err){console.log(err);return;}
+    if(playlist){
+      playlist.songs.push(req.body.songID);
+      playlist.save();
+      return res.redirect('back');
+    }else{
+      return res.redirect('back');
+    }
+  })
+  
+}

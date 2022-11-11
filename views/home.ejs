@@ -114,12 +114,11 @@
                 <i class="fa fa-play" aria-hidden="true"></i>
               </button>
             </form>
-            <form action="/users/add">
-              <input type="hidden" name="song_id" value="<%=song._id%>" />
-              <button type="submit" title="Add to Playlist">
+            <div class="song-id" >
+              <button title="Get ID" onclick="copyToClipBoard('<%=song._id%>')">
                 <i class="fa fa-plus-circle" aria-hidden="true"></i>
               </button>
-            </form>
+            </div>
           </div>
         </div>
         <% } %>
@@ -146,32 +145,47 @@
           <input type="hidden" name="user_id" value="<%=locals.user._id%>" />
           <button type="submit">ADD</button>
         </form>
-        <hr />
-        Your Playlists
-        <br />
+        <hr>
+        <span>Your Playlists</span>
+        <br>
         <div class="my-playlist">
           <% for(playlist of playlists){ %>
-          <li>
-            <%= playlist.name %>
-            <button onclick="copyToClipBoard('<%=playlist._id%>')">
+          <li class="playlist-box">
+            
+            <div class="playlist-header">
+              <%= playlist.name %>
+              <form action="/users/play-playlist">
+                <input type="hidden" value="<%=playlist._id%>" required name="playlistID">
+                <button class="btn-p" type="submit" title="Play">
+                  <i class="fa fa-play" aria-hidden="true"></i>
+                </button>
+              </form>
+            <button class="btn-p" onclick="copyToClipBoard('<%=playlist._id%>')">
               <i class="fa fa-share-alt" aria-hidden="true"></i>
             </button>
+
+          </div>
+            <form action="/users/add-to-playlist" method="post">
+              <input type="text" required placeholder="Put Song ID To ADD" name="songID">
+              <input type="hidden" required value="<%=playlist._id%>" name="playlistID">
+              <button class="btn-p" type="submit" >Add</button>
+            </form>
+            
           </li>
           <%}%>
-        </div>
-
-        <button type="button" class="collapsible">
-          Liked songs
-          <form action="/users/playLiked" method="post">
-            <input type="hidden" name="user_id" value="<%=locals.user._id%>" />
-            <button type="submit">PLAY</button>
+        </div><hr>
+        <div class="likes-header">
+        <span>Liked songs</span>
+        <form action="/users/playLiked" method="post">
+          <input type="hidden" name="user_id" value="<%=locals.user._id%>" />
+          <button class="btn-p" type="submit">PLAY</button>
           </form>
-        </button>
-
+        </div>
         <div class="content">
+          <% let j =1%>
           <% for( like of user.likes) {%>
-          <p><%= like.name%> | <%=like.artist%></p>
-          <%}%>
+          <p><%=j%> . <%= like.name%> | <%=like.artist%></p>
+          <%j++;}%>
         </div>
         <hr />
 
