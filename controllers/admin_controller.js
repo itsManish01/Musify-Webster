@@ -1,6 +1,8 @@
 const Song = require("../models/songs");
 
 module.exports.home = function (req, res) {
+
+    //rendering to Admin page
   return res.render("admin");
 };
 
