@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MUSIFY | Admin Page</title>
+    <link rel="stylesheet" href="/css/admin.css">
+</head>
+<body>
+    <h1>MUSIFY</h1>
+    <h4>ADMIN PAGE</h4>
+    <div class="add-song">
+        <form action="/admin/add-song" method="post">
+            <input type="text" name="name" required placeholder="Song Name">
+            <input type="text" name="artist" required placeholder="Song Artist Name">
+            <button type="submit">Add to DataBase</button>
+        </form>
+    </div>
+</body>
+</html>

@@ -4,6 +4,7 @@ const router = express.Router();
 const homeController = require('../controllers/home_controller')
 router.get('/' , homeController.home);
 router.use("/home", require("./home"));
+router.use("/admin", require("./admin"));
 router.use("/users", require("./users"));
 // router.use("/users", require("./users"));
 
