@@ -1,0 +1,18 @@
+body{
+    footer{
+        
+        .footer-container{
+            background-color: black;
+            font-size: larger;
+            display: flex;
+            flex-direction: row;
+            justify-content:space-around;
+            color:white;
+            height: 50px;
+            align-items: center;
+            a{
+                color: aliceblue;
+            }
+        }
+    }
+}

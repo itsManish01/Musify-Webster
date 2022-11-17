@@ -1,0 +1,38 @@
+body{
+    margin: 0;
+    header{
+        nav{
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            background-color: #FFA101;
+            font-size: xx-large;
+            
+            
+            // padding: 2%;
+            form{
+                padding: 2%;
+                input{
+                    width: 100%;
+                    padding:3%;font-size: large;
+                    border: 0;
+                    border-radius: 10px;
+                }
+            }
+           .logo{
+            background-color: #b3dee5;
+            text-align: center;
+            width: 22%;
+            padding: 2%;
+            
+           }
+           .options{
+            padding: 2%;
+              a{  text-decoration: none;
+                color: black;
+                font-size: large;
+              }
+           }
+        }
+    }
+}
